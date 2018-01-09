@@ -47,9 +47,10 @@ class SpringCloudConfig {
       if(err) return _onLoad(err);
 
       const confJson = conf.propertiesJson;
-      const busOpt = confJson && confJson[NODE_SERVICE_CONFIG_KEY] && confJson[NODE_SERVICE_CONFIG_KEY][NODE_SERVICE_CONFIG_BUS_KEY];
+      const confBusOpt = confJson && confJson[NODE_SERVICE_CONFIG_KEY] && confJson[NODE_SERVICE_CONFIG_KEY][NODE_SERVICE_CONFIG_BUS_KEY];
+      const busOpt =  Object.assign({}, options.bus, confBusOpt);
       if(busOpt && busOpt.enable) {
-        options.bus = Object.assign({}, options.bus, busOpt);;
+        options.bus = busOpt;
         cloudBus.watch(options, _onRefresh)
       }
 
