@@ -33,6 +33,9 @@ const cloudBus = require("./lib/cloud_bus");
  * @param onRefresh
  */
 
+const NODE_SERVICE_CONFIG_KEY = "node_service";
+const NODE_SERVICE_CONFIG_BUS_KEY = "bus";
+
 const noop = (err, data) => {};
 
 class SpringCloudConfig {
@@ -44,8 +47,9 @@ class SpringCloudConfig {
       if(err) return _onLoad(err);
 
       const confJson = conf.propertiesJson;
-      if(confJson.configbus && confJson.configbus.enable) {
-        options.bus = Object.assign({}, options.bus, confJson.configbus);;
+      const busOpt = confJson && confJson[NODE_SERVICE_CONFIG_KEY] && confJson[NODE_SERVICE_CONFIG_KEY][NODE_SERVICE_CONFIG_BUS_KEY];
+      if(busOpt && busOpt.enable) {
+        options.bus = Object.assign({}, options.bus, busOpt);;
         cloudBus.watch(options, _onRefresh)
       }
 
