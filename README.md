@@ -94,16 +94,10 @@ const options = {
     routeKey: '#'
   }
 }
-
-
-
-client.load(options)
-.then((config) => { ... })
-.catch((error) => { ... });
  
-// or
- 
-client.load(options, (error, config) => { ... });
+const cbLoad = (err, config) => { ... }
+const cbRefresh = (err, config) => { ... }
+client.load(options, cbLoad, cbRefresh);
 ```
 
 ### `Config` object
