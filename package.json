@@ -21,6 +21,7 @@
   "devDependencies": {
     "jsdoc": "3.4.3",
     "underscore": "^1.8.3",
-    "amqplib": "^0.5.2"
+    "amqplib": "^0.5.2",
+    "js-shortid": "^0.1.1"
   }
 }

@@ -29,32 +29,29 @@ const cloudBus = require("./lib/cloud_bus");
     }
   }
 
- * @param callback
+ * @param onLoad
+ * @param onRefresh
  */
-const loadWithWatch = (options, callback) => {
-  configLoader.load(options, (err, conf) => {
-    if(err) return callback(err);
 
-    const confJson = conf.propertiesJson;
-    if(confJson.configbus && confJson.configbus.enable) {
-      options.bus = Object.assign({}, options.bus, confJson.configbus);;
-      cloudBus.watch(options, callback)
-    }
+const noop = (err, data) => {};
 
-    callback(null, conf);
-  })
+class SpringCloudConfig {
+  load(options, onLoad, onRefresh) {
+    const self = this;
+    const _onLoad = onLoad || noop;
+    const _onRefresh = onRefresh || noop;
+    configLoader.load(options, (err, conf) => {
+      if(err) return _onLoad(err);
+
+      const confJson = conf.propertiesJson;
+      if(confJson.configbus && confJson.configbus.enable) {
+        options.bus = Object.assign({}, options.bus, confJson.configbus);;
+        cloudBus.watch(options, _onRefresh)
+      }
+
+      _onLoad(null, conf);
+    })
+  }
 }
 
-module.exports = {
-  /**
-   * Retrieve properties from Spring Cloud config service
-   *
-   * @param {module:CloudConfigClient~Options} options - spring client configuration options
-   * @param {module:CloudConfigClient~loadCallback} [callback] - load callback
-   * @returns {Promise<module:Config~Config, Error>|void} promise handler or void if callback was not defined
-   *
-   * @since 1.0.0
-   */
-  load: loadWithWatch,
-  watch: cloudBus.watch
-};
+module.exports = new SpringCloudConfig();
