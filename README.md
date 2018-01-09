@@ -98,7 +98,28 @@ const options = {
 const cbLoad = (err, config) => { ... }
 const cbRefresh = (err, config) => { ... }
 client.load(options, cbLoad, cbRefresh);
+
 ```
+### `Spring Cloud Bus` Config
+``` yml
+# spring cloud prefix should be node_service, eg:
+node_service:
+  bus: {
+    enable: true,
+    url: {
+      hostname: '127.0.0.1',
+      port: 5672,
+      username: 'rabbitmq_user',
+      password: 'rabbitmq_password',
+      vhost: '/'
+    },
+    service: 'node-service',
+    exchange: 'springCloudBus',
+    routeKey: '#'
+  }
+
+```
+
 
 ### `Config` object
 
