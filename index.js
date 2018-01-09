@@ -17,13 +17,13 @@ const cloudBus = require("./lib/cloud_bus");
     profiles:['dev'],
     bus: {
       url: {
-        hostname: '192.168.0.232',
+        hostname: '192.168.0.100',
         port: 5672,
-        username: 'ms_config',
-        password: 'password2018go',
-        vhost: '/vconfig-dev'
+        username: 'mq_user',
+        password: 'mq_pass',
+        vhost: '/vconfig'
       },
-      service: 'nodeservice',
+      service: 'node-service',
       exchange: 'springCloudBus',
       routeKey: '#'
     }
