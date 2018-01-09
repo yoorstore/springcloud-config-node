@@ -18,10 +18,12 @@
     "email": "cludezhu@gmail.com"
   },
   "license": "MIT",
-  "devDependencies": {
-    "jsdoc": "3.4.3",
+  "dependencies": {
     "underscore": "^1.8.3",
     "amqplib": "^0.5.2",
     "js-shortid": "^0.1.1"
+  },
+  "devDependencies": {
+    "jsdoc": "3.4.3"
   }
 }
